@@ -25,9 +25,9 @@ class LKAT(nn.Module):
         return u * attn
 
 # =========================
-# 2. FGAR
+# 2. HGAR
 # =========================
-class FGAR(nn.Module):
+class HGAR(nn.Module):
     def __init__(self, dim):
         super().__init__()
 
@@ -187,7 +187,7 @@ class FGAR(nn.Module):
 
 # =========================
 # 3. ADPF
-# FGAR main branch
+# HGAR main branch
 # + LKAT structural compensation
 # + adaptive fusion
 # =========================
@@ -197,9 +197,9 @@ class ADPF(nn.Module):
         super().__init__()
 
         # =========================================
-        # 1. FGAR main branch
+        # 1. HGAR main branch
         # =========================================
-        self.fgar = FGAR(dim)
+        self.fgar = HGAR(dim)
 
         # =========================================
         # 2. LKAT compensation branch
@@ -244,7 +244,7 @@ class ADPF(nn.Module):
     def forward(self, x):
 
         # -----------------------------------------
-        # FGAR main branch
+        # HGAR main branch
         # -----------------------------------------
         fgar_out = self.fgar(x)
 
@@ -272,7 +272,7 @@ class ADPF(nn.Module):
         fusion_gate = self.mix_gate(
             torch.cat(
                 [
-                    fgar_out,
+                    hgar_out,
                     lkat_res
                 ],
                 dim=1
@@ -286,12 +286,12 @@ class ADPF(nn.Module):
         )
 
         # -----------------------------------------
-        # FGAR
+        # HGAR
         # +
         # LKAT structural compensation
         # -----------------------------------------
         out = (
-            fgar_out +
+            hgar_out +
             compensation
         )
 
