@@ -33,7 +33,7 @@ datasets:
     use_flip: false
     use_rot: false
 network_g:
-  type: MAN
+  type: SFAN
   n_resblocks: 24
   n_resgroups: 1
   n_colors: 3
