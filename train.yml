@@ -1,4 +1,4 @@
-name: SFAN
+name: CAHRNet
 model_type: SRModel
 scale: 2
 num_gpu: 1
@@ -33,7 +33,7 @@ datasets:
     use_flip: false
     use_rot: false
 network_g:
-  type: SFAN
+  type: CAHRNet
   n_resblocks: 24
   n_resgroups: 1
   n_colors: 3
